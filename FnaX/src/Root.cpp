@@ -20,10 +20,11 @@ int Root::gameLoop() {
 
         }
         case 2: { //custom night
-
+           
         }
         case 3: { //office
-            Office.renderer();
+            Office.interactCheck(Mouse, Window);
+            Office.renderer(Window, Mouse);
         }
         case 4: { //cameras 
 

@@ -12,7 +12,7 @@ class Root
 	sf::RenderWindow Window{ sf::VideoMode(1280, 720), "SFML Shader Example" };
 	int location{ 2 };
 	Room Map[11]; 
-	Office Office{ Window, Mouse };
+	Office Office;
 	sf::Mouse Mouse;
 
 public:
