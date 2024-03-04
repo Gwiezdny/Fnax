@@ -13,12 +13,15 @@ class Office {
 	bool doAction{ true };
 	sf::Clock clock;
 	int fanAnimationFrame{ 0 };
+	bool isBonnie{ false };
+	bool isChica{ false };
 
-	sf::Texture backgroundTexture;
+	sf::Texture backgroundTexture[5];
 	sf::RenderTexture preWindow;
 	sf::Shader shader;
 	sf::Texture preWindowTexture;
 	sf::Texture fan[3];
+	sf::Texture cameraButton;
 
 	sf::Sprite backgroundSprite;
 	sf::Sprite preWindowSprite;
@@ -27,15 +30,17 @@ class Office {
 	sf::Sprite DoorRightSprite;
 	sf::Sprite ButtonRightSprite;
 	sf::Sprite fanSprite;
+	//sf::Sprite cameraButton;
 
 	void checkViewMove(sf::View& tmpView, sf::Vector2f tmpVector, int tmpTextureSizeX);
 	sf::Vector2f mouseMoveTracking(sf::Window& tmpWindow, sf::Mouse& tmpMouse);
-	void updateButtonStatus(Door& Door, sf::Sprite& DoorSprite);
+	void updateButtonStatus(Door& TargetDoor, sf::Sprite& DoorSprite, Door& SecoundDoor);
 	void textureModule();
 	void animationModule();
 	void buttonTextureUpdate(Door& Door, sf::Sprite& buttonSprite);
 	void doorTextureUpdate(Door& Door, sf::Sprite& doorSprite);
 	void fanAnimation();
+	void lightTextureUpdate();
 public:
 	Office();
 	void interactCheck(sf::Mouse& tmpMouse, sf::RenderWindow& tmpWindow);
