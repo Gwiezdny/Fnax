@@ -10,6 +10,7 @@
 class Root
 {
 	sf::RenderWindow Window{ sf::VideoMode(1280, 720), "SFML Shader Example" };
+	sf::Texture CameraAnimation[11];
 	int location{ 3 };
 	//Room Map[11]; 
 	CameraSystem CameraSystem;

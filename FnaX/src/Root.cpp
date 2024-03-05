@@ -2,6 +2,12 @@
 
 Root::Root() {
     Window.setFramerateLimit(60);
+
+    std::string tmp;
+    for (int i = 0; i < 11; i++) {
+        tmp = "/" + std::to_string(i) + ".png";
+        if (!CameraAnimation[i].loadFromFile("assets/general/CameraAnimation" + tmp)) { std::cerr << "Failed to load door texture" << std::endl; }
+    }
 }
 
 int Root::gameLoop() {

@@ -14,10 +14,11 @@ class Office {
 	bool textureUpdateNeed{ false };
 	bool doAction{ true };
 	bool canOpenCameraSystem{ false };
+	int cameraAnimationFrame{ 0 };
 	
 	sf::Clock clock;
 	int fanAnimationFrame{ 0 };
-	bool isBonnie{ true };
+	bool isBonnie{ false };
 	bool isChica{ false };
 
 	sf::Texture backgroundTexture[5];

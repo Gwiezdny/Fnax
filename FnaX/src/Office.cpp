@@ -26,7 +26,7 @@ Office::Office() {
     DoorLeftSprite.setTexture(DoorLeft.animation[0]);
     DoorLeftSprite.setPosition(70.0f, 5.0f);
     DoorRightSprite.setTexture(DoorRight.animation[0]);
-    DoorRightSprite.setPosition(1272.0f, 5.0f);
+    DoorRightSprite.setPosition(1271.0f, 5.0f);
     fanSprite.setPosition(780.0f, 303.0f);
 }
 
@@ -78,7 +78,7 @@ int Office::openCameraSystem() {
         canOpenCameraSystem = false;
         return 1;
     }
-    else if (!cameraButtonSprite.getGlobalBounds().contains(mousePosition.x, mousePosition.y) && !canOpenCameraSystem) {
+    else if (mousePosition.y < 640 && !canOpenCameraSystem) {
         canOpenCameraSystem = true;
         return 0;
     }
@@ -192,6 +192,6 @@ void Office::renderer(sf::RenderWindow& tmpWindow, sf::Mouse& tmpMouse) {
 
     tmpWindow.clear();
     tmpWindow.draw(preWindowSprite, &shader);
-    tmpWindow.draw(cameraButtonSprite);
+    if (canOpenCameraSystem) { tmpWindow.draw(cameraButtonSprite); }
     tmpWindow.display();
 }

@@ -11,6 +11,9 @@ class CameraSystem
 	sf::Vector2f mousePosition;
 	bool doAction{ true };
 	bool canCloseCameraSystem{ false };
+	int selectedCamera{ 0 };
+	int cameraAnimationFrame{ 0 };
+
 
 	sf::Texture preWindowTexture;
 	sf::Texture cameraButtonTexture;

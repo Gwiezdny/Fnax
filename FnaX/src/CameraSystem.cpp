@@ -12,7 +12,7 @@ int CameraSystem::closeCameraSystem() {
         canCloseCameraSystem = false;
         return 1;
     }
-    else if (!cameraButtonSprite.getGlobalBounds().contains(mousePosition.x, mousePosition.y) && !canCloseCameraSystem) {
+    else if (mousePosition.y < 640 && !canCloseCameraSystem) {
         canCloseCameraSystem = true;
         return 0; 
     }
@@ -37,6 +37,6 @@ void CameraSystem::renderer(sf::RenderWindow& tmpWindow, sf::Mouse& Mouse) {
 
     tmpWindow.clear();
     tmpWindow.draw(preWindowSprite, &shader);
-    tmpWindow.draw(cameraButtonSprite);
+    if (canCloseCameraSystem) { tmpWindow.draw(cameraButtonSprite); }
     tmpWindow.display();
 }
