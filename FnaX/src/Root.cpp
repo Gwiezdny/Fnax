@@ -23,11 +23,14 @@ int Root::gameLoop() {
            
         }
         case 3: { //office
-            Office.interactCheck(Mouse, Window);
+            if (Office.interactCheck(Mouse, Window) == 1) { location = 4; }
             Office.renderer(Window, Mouse);
+            break;
         }
         case 4: { //cameras 
-
+            if (CameraSystem.interactCheck(Mouse, Window) == 1) { location = 3; }
+            CameraSystem.renderer(Window, Mouse);
+            break;
         }
 
         default:

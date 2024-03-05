@@ -8,6 +8,9 @@ Office::Office() {
     if (!backgroundTexture[3].loadFromFile("assets/office/OfficeBackground/bonnie.png")) { std::cerr << "Failed to load office_background texture" << std::endl; }
     if (!backgroundTexture[4].loadFromFile("assets/office/OfficeBackground/chica.png")) { std::cerr << "Failed to load office_background texture" << std::endl; }
     backgroundSprite.setTexture(backgroundTexture[0]);
+    if (!cameraButtonTexture.loadFromFile("assets/office/cameraButton.png")) { std::cerr << "Failed to load camera_button texture" << std::endl; }
+    cameraButtonSprite.setTexture(cameraButtonTexture);
+    cameraButtonSprite.setPosition(256.0f, 645.0f);
 
     if (!shader.loadFromFile("src/shader/PanoramaShaderVert.vert", "src/shader/PanoramaShaderFrag.frag")) { std::cerr << "Failed to load shader" << std::endl; }
     std::string tmp;
@@ -55,8 +58,8 @@ void Office::checkViewMove(sf::View& tmpView, sf::Vector2f tmpVector, int tmpTex
 }
 
 void Office::updateButtonStatus(Door& TargetDoor, sf::Sprite& ButtonSprite, Door& SecoundDoor) {
-    if (ButtonSprite.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
-        if (mousePosition.y < ButtonSprite.getPosition().y + (ButtonSprite.getTexture()->getSize().y / 2)) {
+    if (ButtonSprite.getGlobalBounds().contains(relativeMousePosition.x, relativeMousePosition.y)) {
+        if (relativeMousePosition.y < ButtonSprite.getPosition().y + (ButtonSprite.getTexture()->getSize().y / 2)) {
             TargetDoor.isClose = !TargetDoor.isClose;
             textureUpdateNeed = true;
             doAction = false;
@@ -70,13 +73,29 @@ void Office::updateButtonStatus(Door& TargetDoor, sf::Sprite& ButtonSprite, Door
     }
 }
 
-void Office::interactCheck(sf::Mouse& tmpMouse, sf::RenderWindow& tmpWindow) {
-    mousePosition = tmpWindow.mapPixelToCoords(tmpMouse.getPosition(tmpWindow), view);
+int Office::openCameraSystem() {
+    if (cameraButtonSprite.getGlobalBounds().contains(mousePosition.x, mousePosition.y) && canOpenCameraSystem) {
+        canOpenCameraSystem = false;
+        return 1;
+    }
+    else if (!cameraButtonSprite.getGlobalBounds().contains(mousePosition.x, mousePosition.y) && !canOpenCameraSystem) {
+        canOpenCameraSystem = true;
+        return 0;
+    }
+    else { 
+        return 0; 
+    }
+}
+
+int Office::interactCheck(sf::Mouse& tmpMouse, sf::RenderWindow& tmpWindow) {
+    relativeMousePosition = tmpWindow.mapPixelToCoords(tmpMouse.getPosition(tmpWindow), view);
+    mousePosition = tmpWindow.mapPixelToCoords(tmpMouse.getPosition(tmpWindow));
     if (!tmpMouse.isButtonPressed(tmpMouse.Left)) { doAction = true; }
     if (tmpMouse.isButtonPressed(tmpMouse.Left) && doAction) {
         updateButtonStatus(DoorLeft, ButtonLeftSprite, DoorRight);
         updateButtonStatus(DoorRight, ButtonRightSprite, DoorLeft);
     }
+    return openCameraSystem();
 }
 void Office::buttonTextureUpdate(Door& Door, sf::Sprite& buttonSprite) {
     if (!Door.isClose && !Door.isLightOn) { //both off
@@ -111,11 +130,17 @@ void Office::fanAnimation() {
 }
 
 void Office::lightTextureUpdate() {
-    if (DoorLeft.isLightOn) {
+    if (DoorLeft.isLightOn && !isBonnie) {
         backgroundSprite.setTexture(backgroundTexture[1]);
     }
-    else if(DoorRight.isLightOn){
+    else if(DoorRight.isLightOn && !isChica){
         backgroundSprite.setTexture(backgroundTexture[2]);
+    }
+    else if(DoorLeft.isLightOn && isBonnie){
+        backgroundSprite.setTexture(backgroundTexture[3]);
+    }
+    else if (DoorRight.isLightOn && isChica) {
+        backgroundSprite.setTexture(backgroundTexture[4]);
     }
     else {
         backgroundSprite.setTexture(backgroundTexture[0]);
@@ -167,5 +192,6 @@ void Office::renderer(sf::RenderWindow& tmpWindow, sf::Mouse& tmpMouse) {
 
     tmpWindow.clear();
     tmpWindow.draw(preWindowSprite, &shader);
+    tmpWindow.draw(cameraButtonSprite);
     tmpWindow.display();
 }
