@@ -13,7 +13,9 @@ class Office {
 	sf::Vector2f mousePosition;
 	bool textureUpdateNeed{ false };
 	bool doAction{ true };
-	bool canOpenCameraSystem{ false };
+	bool canOpenCameraSystem{ true };
+	bool isCameraOpening{ false };
+	bool isCameraClosing{ false };
 	int cameraAnimationFrame{ 0 };
 	
 	sf::Clock clock;
@@ -26,6 +28,7 @@ class Office {
 	sf::Texture preWindowTexture;
 	sf::Texture fan[3];
 	sf::Texture cameraButtonTexture;
+	sf::Texture cameraAnimationTexture[11];
 
 	sf::Sprite backgroundSprite;
 	sf::Sprite preWindowSprite;
@@ -35,6 +38,7 @@ class Office {
 	sf::Sprite ButtonRightSprite;
 	sf::Sprite fanSprite;
 	sf::Sprite cameraButtonSprite;
+	sf::Sprite cameraAnimationSprite;
 
 	void checkViewMove(sf::View& tmpView, sf::Vector2f tmpVector, int tmpTextureSizeX);
 	sf::Vector2f mouseMoveTracking(sf::Window& tmpWindow, sf::Mouse& tmpMouse);
@@ -46,6 +50,8 @@ class Office {
 	void fanAnimation();
 	void lightTextureUpdate();
 	int openCameraSystem();
+	void cameraSystemAnimation();
+
 public:
 	Office();
 	int interactCheck(sf::Mouse& tmpMouse, sf::RenderWindow& tmpWindow);

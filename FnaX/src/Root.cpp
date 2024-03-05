@@ -2,12 +2,6 @@
 
 Root::Root() {
     Window.setFramerateLimit(60);
-
-    std::string tmp;
-    for (int i = 0; i < 11; i++) {
-        tmp = "/" + std::to_string(i) + ".png";
-        if (!CameraAnimation[i].loadFromFile("assets/general/CameraAnimation" + tmp)) { std::cerr << "Failed to load door texture" << std::endl; }
-    }
 }
 
 int Root::gameLoop() {
@@ -29,12 +23,12 @@ int Root::gameLoop() {
            
         }
         case 3: { //office
-            if (Office.interactCheck(Mouse, Window) == 1) { location = 4; }
+            if (Office.interactCheck(Mouse, Window) == 1) { location = 4; break; }
             Office.renderer(Window, Mouse);
             break;
         }
         case 4: { //cameras 
-            if (CameraSystem.interactCheck(Mouse, Window) == 1) { location = 3; }
+            if (CameraSystem.interactCheck(Mouse, Window) == 1) { location = 3; break; }
             CameraSystem.renderer(Window, Mouse);
             break;
         }

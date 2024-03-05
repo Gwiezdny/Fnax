@@ -18,6 +18,10 @@ Office::Office() {
         tmp = "/" + std::to_string(i) + ".png";
         if (!fan[i].loadFromFile("assets/office/fan" + tmp)) { std::cerr << "Failed to load door texture" << std::endl; }
     }
+    for (int i = 0; i < 11; i++) {
+        tmp = "/" + std::to_string(i) + ".png";
+        if (!cameraAnimationTexture[i].loadFromFile("assets/general/CameraAnimation" + tmp)) { std::cerr << "Failed to load door texture" << std::endl; }
+    }
 
     ButtonLeftSprite.setTexture(DoorLeft.buttonOff);
     ButtonLeftSprite.setPosition(5.0f, 310.0f);
@@ -74,16 +78,37 @@ void Office::updateButtonStatus(Door& TargetDoor, sf::Sprite& ButtonSprite, Door
 }
 
 int Office::openCameraSystem() {
-    if (cameraButtonSprite.getGlobalBounds().contains(mousePosition.x, mousePosition.y) && canOpenCameraSystem) {
-        canOpenCameraSystem = false;
-        return 1;
+    if (cameraButtonSprite.getGlobalBounds().contains(mousePosition.x, mousePosition.y) && canOpenCameraSystem && !isCameraOpening && !isCameraClosing) {
+        isCameraOpening = true;
+        return 0;
     }
-    else if (mousePosition.y < 640 && !canOpenCameraSystem) {
+    else if (mousePosition.y < 640 && !canOpenCameraSystem && !isCameraOpening && !isCameraClosing) {
         canOpenCameraSystem = true;
         return 0;
     }
-    else { 
-        return 0; 
+    else if(cameraAnimationFrame == 10 && !isCameraClosing) { 
+        isCameraOpening = false;
+        canOpenCameraSystem = false;
+        isCameraClosing = true;
+        return 1; 
+    }
+    else if(cameraAnimationFrame == 0 && isCameraClosing){
+        isCameraClosing = false;
+        return 0;
+    }
+    else {
+        return 0;
+    }
+}
+
+void Office::cameraSystemAnimation() {
+    if (isCameraOpening) {
+        cameraAnimationSprite.setTexture(cameraAnimationTexture[cameraAnimationFrame]);
+        cameraAnimationFrame++;
+    }
+    else if (isCameraClosing) {
+        cameraAnimationSprite.setTexture(cameraAnimationTexture[cameraAnimationFrame]);
+        cameraAnimationFrame--;
     }
 }
 
@@ -158,6 +183,7 @@ void Office::textureModule() {
 void Office::animationModule() {
     doorTextureUpdate(DoorLeft, DoorLeftSprite);
     doorTextureUpdate(DoorRight, DoorRightSprite);
+    cameraSystemAnimation();
     if (clock.getElapsedTime().asSeconds() > 0.02) {
         fanAnimation();
         clock.restart();
@@ -192,6 +218,7 @@ void Office::renderer(sf::RenderWindow& tmpWindow, sf::Mouse& tmpMouse) {
 
     tmpWindow.clear();
     tmpWindow.draw(preWindowSprite, &shader);
-    if (canOpenCameraSystem) { tmpWindow.draw(cameraButtonSprite); }
+    if (canOpenCameraSystem && !isCameraOpening) { tmpWindow.draw(cameraButtonSprite); }
+    if (isCameraOpening || isCameraClosing) { tmpWindow.draw(cameraAnimationSprite); }
     tmpWindow.display();
 }

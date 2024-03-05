@@ -12,15 +12,12 @@ class CameraSystem
 	bool doAction{ true };
 	bool canCloseCameraSystem{ false };
 	int selectedCamera{ 0 };
-	int cameraAnimationFrame{ 0 };
-
 
 	sf::Texture preWindowTexture;
 	sf::Texture cameraButtonTexture;
 
 	sf::Sprite preWindowSprite;
 	sf::Sprite cameraButtonSprite;
-
 
 	int closeCameraSystem();
 public:
