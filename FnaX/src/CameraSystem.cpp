@@ -2,8 +2,12 @@
 
 CameraSystem::CameraSystem() {
     if (!cameraButtonTexture.loadFromFile("assets/office/cameraButton.png")) { std::cerr << "Failed to load camera_button texture" << std::endl; }
+    if (!locationMapTexture.loadFromFile("assets/cameraSystem/locationMap.png")) { std::cerr << "Failed to load LocationMap texture" << std::endl; }
     cameraButtonSprite.setTexture(cameraButtonTexture);
     cameraButtonSprite.setPosition(256.0f, 645.0f);
+    LocationMapSprite.setTexture(locationMapTexture);
+    LocationMapSprite.setPosition(860.0f, 260.0f);
+
     if (!shader.loadFromFile("src/shader/PanoramaShaderVert.vert", "src/shader/PanoramaShaderFrag.frag")) { std::cerr << "Failed to load shader" << std::endl; }
 }
 
@@ -37,6 +41,7 @@ void CameraSystem::renderer(sf::RenderWindow& tmpWindow, sf::Mouse& Mouse) {
 
     tmpWindow.clear();
     tmpWindow.draw(preWindowSprite, &shader);
+    tmpWindow.draw(LocationMapSprite);
     if (canCloseCameraSystem) { tmpWindow.draw(cameraButtonSprite); }
     tmpWindow.display();
 }
