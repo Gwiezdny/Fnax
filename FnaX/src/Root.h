@@ -6,6 +6,7 @@
 #include "Menu.h"
 #include "CustomNight.h"
 #include "CameraSystem.h"
+#include "Animatronic.h"
 
 class Root
 {
@@ -15,6 +16,15 @@ class Root
 	Office Office;
 	sf::Mouse Mouse;
 
+	Animatronic Bonnie{ "assets/general/nan.png", 10, 01 };
+	Animatronic Freedy{ "assets/general/nan.png", 10, 01 };
+	Animatronic Chica{ "assets/general/nan.png", 10, 01 };
+	Animatronic Foxy{ "assets/general/nan.png", 10, 05 };
+
+	void loadBonnieTextures();
+	void loadFreddyTextures();
+	void loadChicaTextures();
+	void loadFoxyTextures();
 public:
 	Root();
 	int gameLoop();

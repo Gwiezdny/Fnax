@@ -122,6 +122,7 @@ int Office::interactCheck(sf::Mouse& tmpMouse, sf::RenderWindow& tmpWindow) {
     }
     return openCameraSystem();
 }
+
 void Office::buttonTextureUpdate(Door& Door, sf::Sprite& buttonSprite) {
     if (!Door.isClose && !Door.isLightOn) { //both off
         buttonSprite.setTexture(Door.buttonOff);
@@ -138,6 +139,7 @@ void Office::buttonTextureUpdate(Door& Door, sf::Sprite& buttonSprite) {
 }
 
 void Office::doorTextureUpdate(Door& Door, sf::Sprite& doorSprite) {
+    //Updateing textur of doors when animation is running
     if (Door.isClose && Door.animationFrame < 15) {
         doorSprite.setTexture(Door.animation[Door.animationFrame]);
         Door.animationFrame++;
@@ -168,7 +170,7 @@ void Office::lightTextureUpdate() {
         backgroundSprite.setTexture(backgroundTexture[4]);
     }
     else {
-        backgroundSprite.setTexture(backgroundTexture[0]);
+        backgroundSprite.setTexture(backgroundTexture[0]); 
     }
 }
 
