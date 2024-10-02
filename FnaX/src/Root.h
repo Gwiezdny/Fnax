@@ -1,12 +1,11 @@
-#pragma once
 #include <SFML/Graphics.hpp>
-#include <iostream>
+//#include <iostream>
 //#include "Crown.h"
 #include "Office.h"
 #include "Menu.h"
 #include "CustomNight.h"
 #include "CameraSystem.h"
-#include "Animatronic.h"
+//#include "Animatronic.h"
 
 class Root
 {
@@ -16,10 +15,10 @@ class Root
 	Office Office;
 	sf::Mouse Mouse;
 
-	Animatronic Bonnie{ "assets/general/nan.png", 10, 01 };
-	Animatronic Freedy{ "assets/general/nan.png", 10, 01 };
-	Animatronic Chica{ "assets/general/nan.png", 10, 01 };
-	Animatronic Foxy{ "assets/general/nan.png", 10, 05 };
+	Animatronic Bonnie{ "assets/general/nan.png", 10, 101 };
+	Animatronic Freedy{ "assets/general/nan.png", 10, 1101 };
+	Animatronic Chica{ "assets/general/nan.png", 10, 101 };
+	Animatronic Foxy{ "assets/general/nan.png", 10, 501 };
 
 	void loadBonnieTextures();
 	void loadFreddyTextures();

@@ -5,14 +5,15 @@ Root::Root() {
     loadBonnieTextures();
     loadChicaTextures();
     loadFreddyTextures();
+    loadFoxyTextures();
 }
 
 void Root::loadBonnieTextures() {
-    Bonnie.addTexture("assets/Animatronics/Bonnie/0101.png", 101);
+    //Bonnie.addTexture("assets/Animatronics/Bonnie/0101.png", 101);
+    Bonnie.addTexture("assets/Animatronics/Bonnie/0302.png", 302);
     Bonnie.addTexture("assets/Animatronics/Bonnie/0201.png", 201);
     Bonnie.addTexture("assets/Animatronics/Bonnie/0202.png", 202);
     Bonnie.addTexture("assets/Animatronics/Bonnie/0301.png", 301);
-    Bonnie.addTexture("assets/Animatronics/Bonnie/0302.png", 302);
     Bonnie.addTexture("assets/Animatronics/Bonnie/0601.png", 601);
     Bonnie.addTexture("assets/Animatronics/Bonnie/0801.png", 801);
     Bonnie.addTexture("assets/Animatronics/Bonnie/0901.png", 901);
@@ -21,8 +22,8 @@ void Root::loadBonnieTextures() {
 }
 
 void Root::loadFreddyTextures() {
-    Freedy.addTexture("assets/Animatronics/Freddy/0101.png", 101);
-    Freedy.addTexture("assets/Animatronics/Freddy/0102.png", 102);
+    //Freedy.addTexture("assets/Animatronics/Freddy/0101.png", 101);
+    //Freedy.addTexture("assets/Animatronics/Freddy/0102.png", 102);
     Freedy.addTexture("assets/Animatronics/Freddy/0301.png", 301);
     Freedy.addTexture("assets/Animatronics/Freddy/0401.png", 401);
     Freedy.addTexture("assets/Animatronics/Freddy/1001.png", 1001);
@@ -30,9 +31,9 @@ void Root::loadFreddyTextures() {
 }
 
 void Root::loadChicaTextures() {
-    Chica.addTexture("assets/Animatronics/Chica/0101.png", 101);
-    Chica.addTexture("assets/Animatronics/Chica/0301.png", 301);
+    //Chica.addTexture("assets/Animatronics/Chica/0101.png", 101);
     Chica.addTexture("assets/Animatronics/Chica/0302.png", 302);
+    Chica.addTexture("assets/Animatronics/Chica/0301.png", 301);
     Chica.addTexture("assets/Animatronics/Chica/0401.png", 401);
     Chica.addTexture("assets/Animatronics/Chica/0402.png", 402);
     Chica.addTexture("assets/Animatronics/Chica/1001.png", 1001);
@@ -42,16 +43,17 @@ void Root::loadChicaTextures() {
     Chica.addTexture("assets/Animatronics/Chica/1103.png", 1103);
 }
 
+void Root::loadFoxyTextures() {
+    Foxy.addTexture("assets/Animatronics/Foxy/0501.png", 501);
+    Foxy.addTexture("assets/Animatronics/Foxy/0502.png", 502);
+    Foxy.addTexture("assets/Animatronics/Foxy/0503.png", 503);
+}
+
 int Root::gameLoop() {
 
     while (Window.isOpen())
     {
         sf::Event event;
-        while (Window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                Window.close();
-        }
 
         switch (location) {
         case 1: { //main menu
@@ -67,6 +69,7 @@ int Root::gameLoop() {
         }
         case 4: { //cameras 
             if (CameraSystem.interactCheck(Mouse, Window) == 1) { location = 3; break; }
+            CameraSystem.updateRoomTextureBasedOnAnimatronicsPosition(Bonnie, Freedy, Chica, Foxy);
             CameraSystem.renderer(Window, Mouse);
             break;
         }
@@ -74,6 +77,12 @@ int Root::gameLoop() {
         default:
             break;
             return 0;
+        }
+
+        while (Window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                Window.close();
         }
     }
     return 0;

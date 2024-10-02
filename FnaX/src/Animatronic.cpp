@@ -1,5 +1,4 @@
 #include "Animatronic.h"
-#include <iostream>
 
 Animatronic::Animatronic(const std::string path,const short tmpIq,const short tmpPos) {
 	iq = tmpIq;
@@ -7,16 +6,17 @@ Animatronic::Animatronic(const std::string path,const short tmpIq,const short tm
 	sf::Texture nanTexture;
 	nanTexture.loadFromFile(path);
 	Textures.push_back(nanTexture);
+	PositionIndex.push_back(0);
 }
 
 short Animatronic::transformPosiionToIndex() { //return index of texture in Textures vector
-	for (int i = 1; i < PositionIndex.size(); i++) {
+	for (short i = 1; i < PositionIndex.size(); i++) {
 		if (PositionIndex[i] == position) { return i; }
 	}
 	return 0; // nanTexture
 }
 
-void Animatronic::setPosition(short pos) { position = pos; }
+void Animatronic::setPosition(int pos) { position = pos; }
 
 void Animatronic::addTexture(const std::string path, const short index) {
 	sf::Texture tmpTexture;
@@ -30,5 +30,6 @@ void Animatronic::addTexture(const std::string path, const short index) {
 short int Animatronic::getPosition() { return position; }
 
 sf::Texture Animatronic::getTexture() {
+	//std::cout << "zwraca " << transformPosiionToIndex() << std::endl;
 	return Textures[transformPosiionToIndex()];
 }

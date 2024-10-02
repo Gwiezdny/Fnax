@@ -20,7 +20,7 @@ class Office {
 	
 	sf::Clock clock;
 	int fanAnimationFrame{ 0 };
-	bool isBonnie{ true };
+	bool isBonnie{ false };
 	bool isChica{ false };
 
 	sf::Texture backgroundTexture[5];
